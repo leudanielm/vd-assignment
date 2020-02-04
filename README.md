@@ -1,68 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Movie app
 
-## Available Scripts
+## Tech-stack
 
-In the project directory, you can run:
+- React
+- React-Router
+- MobX
+- Material UI
 
-### `yarn start`
+## Components
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- AppRoot -> Initialises the router and the stores provider
+- App -> Displays <ShowDetails /> or <EpisodeDetails /> depending on the router path location
+- ShowDetails -> Display details about a show, along with <ShowEpisodes />.
+- ShowEpisodes -> Displays a list of episodes for a selected show
+- EpisodeDetails -> Displays details about a given show (recognised through its id)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Technical Decisions
 
-### `yarn test`
+- MobX was selected as a store solution for its simplicity and observability. I find that expressing state is easier with it, with everything being encapsulated in classes. Its reactive nature also assures a constant data flow across components, without triggering too many actions manually.
+- Material-UI is almost an industry standard when it comes to React UI libraries. It has a very intuitive, uniform API interface.
+- There are a couple of abstraction layers:
+  1. fetch is covered by a facade (for mocking in tests and simplifying its interface when using it in the stores). 
+  2. The DataFetcher is a specialised and tiny rich domain model used in the stores. Its only concern is with fetching and loading the data and eventually reporting errors, thus encapsulating every endpoint request with its own set of statuses and data accessors.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## The data flow
 
-### `yarn build`
+This is a very simplistic overview of how the data flows in the app, and the layout of its components:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Data flow](./data-flow.png)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## What is missing from this project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Unit tests for most of the project (I only wrote one for each type of module (component, service, store))
+- Integration tests (cypress or wdio)
+- Less hardcoded values in the stores (especially endpoints), should be in a config file. 
