@@ -1,13 +1,6 @@
 import React from 'react';
-import { Provider, observer, inject } from 'mobx-react';
+import ShowDetails from './ShowDetails';
 
-import moviesStore from './stores/MoviesApiStore';
-
-function App() {
-  return (
-    <Provider moviesStore={moviesStore}>
-    </Provider>
-  );
+export default function App() {
+  return <ShowDetails />;
 }
-
-export default App;

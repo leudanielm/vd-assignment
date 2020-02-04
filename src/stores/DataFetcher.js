@@ -11,14 +11,26 @@ export default class DataFetcher {
   }
 
   async load() {
-    this.loading = true;
+    this.setLoad(true);
     try {
-      this.data = await this.loader();
+      this.setData(await this.loader());
     } catch (error) {
-      this.error = error;
+      this.setError(error);
     } finally {
-      this.loading = false;
+      this.setLoad(false);
     }
+  }
+
+  setData(data) {
+    this.data = data;
+  }
+
+  setLoad(isLoading) {
+    this.loading = isLoading;
+  }
+
+  setError(error) {
+    this.error = error;
   }
 }
 
@@ -28,4 +40,7 @@ decorate(DataFetcher, {
   error: observable,
   setLoader: action,
   load: action,
+  setLoad: action,
+  setError: action,
+  setData: action,
 });
