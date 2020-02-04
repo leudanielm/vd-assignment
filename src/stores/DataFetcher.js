@@ -1,17 +1,15 @@
-import { observable, action } from 'mobx';
+import { observable, action, decorate } from 'mobx';
 
 export default class DataFetcher {
-  @observable loading = false;
-  @observable data = null;
-  @observable error = null;
+  loading = false;
+  data = null;
+  error = null;
   loader = () => { };
 
-  @action
   setLoader(loaderCallback) {
-    this.loader = this.loaderCallback;
+    this.loader = loaderCallback;
   }
 
-  @action
   async load() {
     this.loading = true;
     try {
@@ -23,3 +21,11 @@ export default class DataFetcher {
     }
   }
 }
+
+decorate(DataFetcher, {
+  loading: observable,
+  data: observable,
+  error: observable,
+  setLoader: action,
+  load: action,
+});
