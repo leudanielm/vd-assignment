@@ -22,6 +22,12 @@ export class MoviesApiStore {
     this.showEpisodes.setLoader(loader);
     await this.showEpisodes.load();
   }
+
+  async getEpisodeDetails(episodeId) {
+    const loader = async () => await fetch(`${this.BASE_URL}episodes/${episodeId}`);
+    this.episodeDetails.setLoader(loader);
+    await this.episodeDetails.load();
+  }
 }
 
 decorate(MoviesApiStore, {

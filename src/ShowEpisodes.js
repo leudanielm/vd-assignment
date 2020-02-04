@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowIcon from '@material-ui/icons/ArrowForward'
+import { withRouter } from 'react-router-dom';
 
 const styles = ({
   episodesContainer: {
@@ -25,7 +26,12 @@ const styles = ({
   },
 });
 
-function ShowEpisodes({ classes, episodes }) {
+function ShowEpisodes({ classes, history, episodes }) {
+
+  function gotoEpisode(id) {
+    history.replace(`/episode/${id}`);
+  }
+
   return (
     <div className={classes.episodesContainer}>
       {episodes.map(episode => episode.image && (
@@ -40,7 +46,7 @@ function ShowEpisodes({ classes, episodes }) {
             </Typography>
           </CardContent>
           <CardActions className={classes.cardActions} disableSpacing>
-            <IconButton aria-label="see details">
+            <IconButton onClick={() => gotoEpisode(episode.id)} aria-label="see details">
               <ArrowIcon />
             </IconButton>
           </CardActions>
@@ -50,4 +56,4 @@ function ShowEpisodes({ classes, episodes }) {
   )
 }
 
-export default withStyles(styles)(ShowEpisodes);
+export default withRouter(withStyles(styles)(ShowEpisodes));
